@@ -22,7 +22,7 @@ import org.hibernate.annotations.OptimisticLocking;
 @Table(name = "t_account")
 @OptimisticLocking(type = OptimisticLockType.VERSION)
 public class AccountBean implements Serializable {
-
+ 
 	/**
 	 * 账务账号表
 	 */
