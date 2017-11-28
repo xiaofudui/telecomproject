@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration>
+	<!-- appender 代表日志输入的位置 -->
+	<!-- 系统启动日志：STDOUT -->
+	<appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+		<!-- layout 主要用于规范日志输出时的格式 -->
+		<!-- PatternLayout 采用模板布局方式 -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<!-- %c == class %d == datetime %p == level %m == message %n == 换行 -->
+			<param name="conversionPattern" value="%c %d{yyyy-MM-dd hh:mm:ss} %p %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="levelMin" value="STDOUT" />
+			<param name="levelMax" value="STDOUT" />
+		</filter>
+	</appender>
+
+	<!-- 开发调试日志：DEBUG -->
+	<!-- RollingFileAppender 文件输出器，它根据文件大小自动生成新的文件 -->
+	<appender name="DEBUG" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="d://logs/ssh-debug.log" />
+		<!-- 如果服务器是Linux，路径可以修改为，例如：/etc/logs/ssh-debug.log -->
+		<param name="append" value="true" />
+		<param name="maxFileSize" value="10240KB" /><!-- 日志文件的最大容量 -->
+		<param name="maxBackupIndex" value="10" />
+		<!-- layout 主要用于规范日志输出时的格式 -->
+		<!-- PatternLayout 采用模板布局方式 -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<!-- %c == class %d == datetime %p == level %m == message %n == 换行 -->
+			<param name="conversionPattern" value="%c %d{yyyy-MM-dd hh:mm:ss} %p %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="levelMin" value="DEBUG" />
+			<param name="levelMax" value="DEBUG" />
+		</filter>
+	</appender>
+
+	<!-- 开发信息日志：INFO -->
+	<!-- RollingFileAppender 文件输出器，它根据文件大小自动生成新的文件 -->
+	<appender name="INFO" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="d://logs/ssh-info.log" />
+		<param name="append" value="true" />
+		<param name="maxFileSize" value="10240KB" /><!-- 日志文件的最大容量 -->
+		<param name="maxBackupIndex" value="10" />
+		<!-- layout 主要用于规范日志输出时的格式 -->
+		<!-- PatternLayout 采用模板布局方式 -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<!-- %c == class %d == datetime %p == level %m == message %n == 换行 -->
+			<param name="conversionPattern" value="%c %d{yyyy-MM-dd hh:mm:ss} %p %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="levelMin" value="INFO" />
+			<param name="levelMax" value="INFO" />
+		</filter>
+	</appender>
+
+	<!-- 警告级别日志：WARN -->
+	<!-- RollingFileAppender 文件输出器，它根据文件大小自动生成新的文件 -->
+	<appender name="WARN" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="d://logs/ssh-warn.log" />
+		<param name="append" value="true" />
+		<param name="maxFileSize" value="10240KB" /><!-- 日志文件的最大容量 -->
+		<param name="maxBackupIndex" value="10" />
+		<!-- layout 主要用于规范日志输出时的格式 -->
+		<!-- PatternLayout 采用模板布局方式 -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<!-- %c == class %d == datetime %p == level %m == message %n == 换行 -->
+			<param name="conversionPattern" value="%c %d{yyyy-MM-dd hh:mm:ss} %p %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="levelMin" value="WARN" />
+			<param name="levelMax" value="WARN" />
+		</filter>
+	</appender>
+
+	<!-- 错误级别日志：ERROR -->
+	<!-- RollingFileAppender 文件输出器，它根据文件大小自动生成新的文件 -->
+	<appender name="ERROR" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="d://logs/ssh-error.log" />
+		<param name="append" value="true" />
+		<param name="maxFileSize" value="10240KB" /><!-- 日志文件的最大容量 -->
+		<param name="maxBackupIndex" value="10" />
+		<!-- layout 主要用于规范日志输出时的格式 -->
+		<!-- PatternLayout 采用模板布局方式 -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<!-- %c == class %d == datetime %p == level %m == message %n == 换行 -->
+			<param name="conversionPattern" value="%c %d{yyyy-MM-dd hh:mm:ss} %p %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="levelMin" value="ERROR" />
+			<param name="levelMax" value="ERROR" />
+		</filter>
+	</appender>
+
+	<root>
+		<!-- 选择日志记录的最低级别 -->
+		<!-- 开发调试阶段，一般从Debug开始记录 -->
+		<!-- 产品上线阶段，一般从Info开始记录 -->
+		<priority value="INFO"></priority>
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="DEBUG" />
+		<appender-ref ref="INFO" />
+		<appender-ref ref="WARN" />
+		<appender-ref ref="ERROR" />
+	</root>
+</log4j:configuration>

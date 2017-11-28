@@ -1,0 +1,111 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <!-- 告知spring容器配置文件路径 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+	
+	<!-- 告知log4j.xml配置文件路径 -->
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>classpath:log4j.xml</param-value>
+	</context-param>
+	
+	<!-- 平均间隔1分钟，维护一次日志文件的数量 -->
+	<context-param>
+		<param-name>log4jRefreshInterval</param-name>
+		<param-value>60</param-value>
+	</context-param>
+	
+	
+	<!-- 配置字符编码集过滤器 -->
+	<filter>
+		<filter-name>encoding</filter-name>
+		<filter-class>org.ssh.telecomproject.filter.EncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		
+		
+	</filter>
+	
+	<!-- 配置其他的过滤器，例如：状态过滤，字符过滤，文本信息过滤…… -->
+	<filter>
+		<filter-name>urlHandleFilter</filter-name>
+		<filter-class>org.ssh.telecomproject.filter.URLHandleFilter</filter-class>
+	</filter>
+	
+	<!-- 如果需要使用PUT/DELETE需要配置如下过滤器
+	目的是将表单数据能够正常的通过消息体传输 -->
+	<filter>  
+        <filter-name>httpPutFormContentFilter</filter-name>  
+        <filter-class>org.springframework.web.filter.HttpPutFormContentFilter</filter-class>  
+    </filter>  
+	
+	<!-- 配置OpenSessionInViewFilter，解决hibernate延迟加载时，抛出的no session问题 -->
+	<filter>
+		<filter-name>openSessionInViewFilter</filter-name>
+		<filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>urlHandleFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>encoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>openSessionInViewFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>  
+        <filter-name>httpPutFormContentFilter</filter-name>  
+        <url-pattern>/*</url-pattern>  
+    </filter-mapping>
+	
+	<!-- 启动spring容器，为除了web层的组件提供一个运行环境，并且将容器中的组件，告知给tomcat容器 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!-- 启动Log4j日志框架 -->
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+
+	<!-- 配置前端控制器，启动springmvc容器， 为web层组件提供一个运行环境 -->
+	<servlet>
+		<servlet-name>springmvc</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:springmvc.xml</param-value>
+		</init-param>
+
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>springmvc</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<!-- Session对象，如果连续30分钟，后台没有接收到 同一个Session的任何请求，
+	那么Session将被tomcat容器清理掉 -->
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+
+	<!-- 配置项目的首页 -->
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>
