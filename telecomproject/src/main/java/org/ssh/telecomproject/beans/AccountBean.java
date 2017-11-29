@@ -12,11 +12,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "t_account")
@@ -59,9 +62,10 @@ public class AccountBean implements Serializable {
 	
 	@Column(name = "qq")
 	private Long qq;// QQ
-	
-//	@JoinColumn(name="fk_role_id")
-//	private RoleBean role;// 角色ID
+	@JsonIgnore
+	@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	@JoinColumn(name="fk_role_id")
+	private RoleBean role;// 角色ID
 	
 	@Column(name = "state")
 	private Integer state;// 状态（1开通/2暂停/3恢复）
@@ -71,18 +75,18 @@ public class AccountBean implements Serializable {
 	
 	@Column(name = "pid")
 	private Integer pid;// 0-正常，1-删除
-	
-//	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy="")//===============================OperationlogBean中属性名
-//	private Set<OperationlogBean> operationlogs;
-//	
-//	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy="")//=======AllaccountBean中属性名
-//	private Set<AllaccountBean> allaccounts;
-//	
-//	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy="")//====BusaccountBean的属性名
-//	private Set<BusaccountBean> busaccounts;
-//	
-//	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy="")//====LoginlogBean的属性名
-//	private Set<LoginlogBean> loginlogs;
+	@JsonIgnore
+	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy="account")//===============================OperationlogBean中属性名
+	private Set<OperationlogBean> operationlogs;
+	@JsonIgnore
+	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy="account")//=======AllaccountBean中属性名
+	private Set<AllaccountBean> allaccounts;
+	@JsonIgnore
+	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy="account")//====BusaccountBean的属性名
+	private Set<BusaccountBean> busaccounts;
+	@JsonIgnore
+	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy="accout")//====LoginlogBean的属性名
+	private Set<LoginlogBean> loginlogs;
 
 	public AccountBean() {
 		super();
@@ -169,13 +173,13 @@ public class AccountBean implements Serializable {
 		this.qq = qq;
 	}
 
-//	public RoleBean getRole() {
-//		return role;
-//	}
-//
-//	public void setRole(RoleBean role) {
-//		this.role = role;
-//	}
+	public RoleBean getRole() {
+		return role;
+	}
+
+	public void setRole(RoleBean role) {
+		this.role = role;
+	}
 
 	public Integer getState() {
 		return state;
@@ -199,6 +203,38 @@ public class AccountBean implements Serializable {
 
 	public void setPid(Integer pid) {
 		this.pid = pid;
+	}
+
+	public Set<OperationlogBean> getOperationlogs() {
+		return operationlogs;
+	}
+
+	public void setOperationlogs(Set<OperationlogBean> operationlogs) {
+		this.operationlogs = operationlogs;
+	}
+
+	public Set<AllaccountBean> getAllaccounts() {
+		return allaccounts;
+	}
+
+	public void setAllaccounts(Set<AllaccountBean> allaccounts) {
+		this.allaccounts = allaccounts;
+	}
+
+	public Set<BusaccountBean> getBusaccounts() {
+		return busaccounts;
+	}
+
+	public void setBusaccounts(Set<BusaccountBean> busaccounts) {
+		this.busaccounts = busaccounts;
+	}
+
+	public Set<LoginlogBean> getLoginlogs() {
+		return loginlogs;
+	}
+
+	public void setLoginlogs(Set<LoginlogBean> loginlogs) {
+		this.loginlogs = loginlogs;
 	}
 
 	@Override

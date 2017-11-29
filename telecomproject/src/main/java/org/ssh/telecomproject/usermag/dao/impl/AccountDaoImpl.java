@@ -42,9 +42,10 @@ public class AccountDaoImpl extends BaseDao implements IAccountDao {
 		String hql = "select count(a.id) from AccountBean as a where a.accountName like CONCAT(:accountName,'%')";
 		Query query = getSession().createQuery(hql);
 		query.setProperties(pagerBean.getParams());
-		Long rows = (Long) query.uniqueResult();
-		pagerBean.setTotal(Integer.valueOf(String.valueOf(rows)));
+		Long ro = (Long) query.uniqueResult();
+		pagerBean.setTotal(Integer.valueOf(String.valueOf(ro)));
 		hql="from AccountBean as a where a.accountName like CONCAT(:accountName,'%')";
+		query = getSession().createQuery(hql);
 		query.setProperties(pagerBean.getParams());
 		query.setFirstResult(pagerBean.getIndex());
 		query.setMaxResults(pagerBean.getNums());
