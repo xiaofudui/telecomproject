@@ -34,7 +34,7 @@ public class AllaccountBean implements Serializable {
 	
 	@Column(name = "idcomment",length = 30)
 	private String idcomment;//账务账号真实姓名
-	@JsonIgnore
+	/*@JsonIgnore*/
 	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinColumn(name="fk_account_id")
 	private AccountBean account;//账务账号id

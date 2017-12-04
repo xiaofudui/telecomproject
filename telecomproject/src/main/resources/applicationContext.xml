@@ -28,7 +28,7 @@
     <context:property-placeholder location="classpath:mysql.properties" ignore-unresolvable="true" ignore-resource-not-found="true"/>
    
    <!-- 配置C3P0数据源连接池,来自于：c3p0.jar -->
-     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
      	<!-- JDBC连接数据库，最基本的4个条件 -->
      	<property name="driverClass" value="${mysql.driver}"></property>
      	<property name="jdbcUrl" value="${mysql.url}"></property>
@@ -52,7 +52,7 @@
      	<!-- 设置当数据库连接无法正常获取的情况下，间隔一定的去重复获取的次数,单位：次数 -->
      	<property name="acquireRetryAttempts" value="20"></property>
      	<!-- 设置间隔多长时间， 回收一次超时连接 -->
-     	<property name="checkoutTimeout" value="60"></property>
+     	<property name="checkoutTimeout" value="5000"></property>
      	<!-- 取消自动提交 -->
      	<property name="autoCommitOnClose" value="false"></property>
      	<!-- 连接池初始化完毕连接之后，将发送一条SQL语句，目的主要是用于验证连接是可用的，是正常的 -->

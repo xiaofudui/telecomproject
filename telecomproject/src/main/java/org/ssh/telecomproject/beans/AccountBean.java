@@ -237,13 +237,13 @@ public class AccountBean implements Serializable {
 		this.loginlogs = loginlogs;
 	}
 
-	@Override
+	/*@Override
 	public String toString() {
 		return "AccountBean [id=" + id + ", accountName=" + accountName + ", gender=" + gender + ", idcard=" + idcard
 				+ ", userName=" + userName + ", userPwd=" + userPwd + ", telephone=" + telephone + ", address="
 				+ address + ", postalcode=" + postalcode + ", qq=" + qq + ", state=" + state + ", opentime=" + opentime
 				+ ", pid=" + pid + "]";
-	}
+	}*/
 	
 	
 

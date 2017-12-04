@@ -43,7 +43,7 @@ public class OneosBean implements Serializable {
 	
 	@Column(name = "priceType")
 	private Integer priceType;//支付类型
-	@JsonIgnore
+	/*@JsonIgnore*/
 	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinColumn(name="fk_allos_id")
 	private AllosBean allos;//某个用户开通的所有业务对象
@@ -92,6 +92,11 @@ public class OneosBean implements Serializable {
 	}
 	public void setAllos(AllosBean allos) {
 		this.allos = allos;
+	}
+	@Override
+	public String toString() {
+		return "OneosBean [id=" + id + ", startTime=" + startTime + ", outTime=" + outTime + ", dateLength="
+				+ dateLength + ", price=" + price + ", priceType=" + priceType + "]";
 	}
 	
 }
